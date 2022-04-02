@@ -14,7 +14,7 @@ describe('Site 요구사항 테스트', () => {
     
         mySite.addBoard(noticeBoard);
 
-        expect(mySite.findBoardByName('공지사항')).toEqual(noticeBoard.notice);
+        expect(mySite.findBoardByName('공지사항')).toEqual(noticeBoard);
     });
 
     test('하나의 Site에 동일한 이름의 Board를 추가할 수 없다.', () => {
@@ -73,7 +73,7 @@ describe('Board 요구사항 테스트', () => {
         const notAddedBoard = new Board('사이트에 추가되지 않은 게시판');
 
         mySite.addBoard(addedBoard);
-
+        
         expect(() => {
             const article = new Article({
                 subject: '글 제목',
