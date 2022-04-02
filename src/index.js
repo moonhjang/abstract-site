@@ -44,6 +44,7 @@ class Article {
         this.subject = subject;
         this.content = content;
         this.author = author;
+        this.id = '공지사항-'+ Math.random(); 
     } 
 }
 
