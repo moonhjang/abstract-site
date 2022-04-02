@@ -5,7 +5,7 @@ class Site {
     
     addBoard(board) {
         if (this.boards.find(name => name.notice === board.notice)){
-            throw Error()
+
         } else {
             this.boards.push(board)
         }
@@ -22,7 +22,11 @@ class Site {
 
 class Board {
     constructor(notice) {
-        this.notice = notice;
+        if (notice === '' || notice === null){
+            throw Error() 
+        } else {
+            this.notice = notice;
+        }
     }
 }
 
@@ -34,11 +38,13 @@ class Comment {}
 
 const mySite = new Site();
 
-const noticeBoard1 = new Board('공지사항');
-const noticeBoard2 = new Board('공지사항');
+const _board = new Board('공지사항');
+const _board2 = new Board('');
+const _board3 = new Board(null);
 
-mySite.addBoard(noticeBoard1);
-mySite.addBoard(noticeBoard2);
+console.log(_board.notice, '확인')
+console.log(_board2.notice, '확인')
+console.log(_board3.notice, '확인')
 
-console.log(mySite.boards)
+
 

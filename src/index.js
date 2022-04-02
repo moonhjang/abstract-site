@@ -21,7 +21,11 @@ class Site {
 
 class Board {
     constructor(notice) {
-        this.notice = notice;
+        if (notice === '' || notice === null){
+            throw Error() 
+        } else {
+            this.notice = notice;
+        }
     }
 }
 
@@ -30,7 +34,7 @@ class Article {}
 class Comment {}
 
 module.exports = {
-    Site,
+    Site, 
     Board,
     Article,
     Comment,
