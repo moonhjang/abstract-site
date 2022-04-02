@@ -4,25 +4,17 @@ class Site {
       }
     
     addBoard(board) {
-        if (this.boards.find(name => name.notice === board)){
+        if (this.boards.find(name => name.notice === board.notice)){
             throw Error()
         } else {
-            this.boards.push(board.notice);
+            this.boards.push(board)
         }
     }
     
-    findBoardByName(boardname){
-        this.boards.find(boardname => boardname.notice)
-        return boardname;
+    findBoardByName(board){
+        this.boards.find(name => name.notice === board)
+        return board;
     }
-
-    // findBoardByName(boardname){
-    //     if(this.boards.find(board => board.notice === boardname)) {
-    //         return boardname;
-    //     } else {
-    //         throw Error()
-    //     }
-    // }
 
 }
    

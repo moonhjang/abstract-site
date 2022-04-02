@@ -1,26 +1,21 @@
-
 class Site {
     constructor() {
         this.boards = [];
       }
     
-    addBoard(boardname) {
-        this.boards.push(boardname.notice);
-    }
-      
-    findBoardByName(boardname){
-        this.boards.find(boardname => boardname.notice)
-        return boardname;
+    addBoard(board) {
+        if (this.boards.find(name => name.notice === board.notice)){
+            throw Error()
+        } else {
+            this.boards.push(board)
+        }
     }
 
-    // findBoardByName(boardname){
-    //     if(this.boards.find(board => board.notice === boardname)) {
-    //         return boardname;
-    //     } else {
-    //         throw Error()
-    //     }
-        
-    // }
+    
+    findBoardByName(board){
+        this.boards.find(name => name.notice === board)
+        return board;
+    }
 
 }
    
@@ -29,28 +24,21 @@ class Board {
     constructor(notice) {
         this.notice = notice;
     }
-
 }
 
 class Article {}
 
 class Comment {}
 
-///////
 
-const mySite = new Site();   
-console.log(mySite)   // Site {boards: []}
 
-const noticeBoard = new Board('공지사항');
-console.log(noticeBoard)  //공지사항
+const mySite = new Site();
 
-mySite.addBoard(noticeBoard)
+const noticeBoard1 = new Board('공지사항');
+const noticeBoard2 = new Board('공지사항');
+
+mySite.addBoard(noticeBoard1);
+mySite.addBoard(noticeBoard2);
+
 console.log(mySite.boards)
-
-// console.log("notice",mySite.boards)  //undefined
-// console.log('here',noticeBoard.b)                   //undefined                                
-
-// mySite.findBoardByName('공지사항')
-
-
 
