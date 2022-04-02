@@ -27,7 +27,7 @@ class Board extends Site {
         }
     }
 
-    publish(article){
+    publish(article) {
         if (this.notice !== '사이트에 추가되지 않은 게시판'){
             this.boards.push(article)
              //id  규칙
@@ -35,6 +35,10 @@ class Board extends Site {
         } else {
             console.log('error')
         }
+    }
+
+    getAllArticles() {
+        return this.boards
 
     }
 }
@@ -45,7 +49,9 @@ class Article extends Board{
         this.subject = subject;
         this.content = content;
         this.author = author;
-        this.id = '공지사항-'+ Math.random(); 
+        this.id = '공지사항-'+ Math.random();
+        this.createdDate = new Date().toISOString();
+        console.log(this.createdDate)
     }   
 }
 
@@ -56,7 +62,6 @@ class Comment {}
 const mySite = new Site();
 
 const noticeBoard = new Board('공지사항');
-
 mySite.addBoard(noticeBoard);
 
 const article = new Article({
@@ -64,7 +69,14 @@ const article = new Article({
     content: '테스트 코드는 수정하면 안됩니다.',
     author: '강승현',
 });
-
 noticeBoard.publish(article);
 
-console.log(article.id.startsWith('공지사항-'),'True여야함')
+const article2 = new Article({
+    subject: '두번째 공지사항입니다.',
+    content: 'DB나 웹서버를 이용할 필요는 없습니다.',
+    author: '강승현',
+});
+noticeBoard.publish(article2);
+
+console.log(noticeBoard.notice)
+console.log(noticeBoard.getAllArticles(), [article, article2])

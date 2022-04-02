@@ -35,8 +35,12 @@ class Board extends Site {
         } else {
             throw Error()
         }
-
     }
+
+    getAllArticles() {
+        return this.boards
+    }
+
 }
 
 class Article {
@@ -45,6 +49,7 @@ class Article {
         this.content = content;
         this.author = author;
         this.id = '공지사항-'+ Math.random(); 
+        this.createdDate = new Date().toISOString();
     } 
 }
 
