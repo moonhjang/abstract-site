@@ -166,6 +166,7 @@ describe('Board 요구사항 테스트', () => {
         expect(noticeBoard.getAllArticles()).toEqual([article, article2]);
     });
 });
+ 
 
 describe('Article 요구사항 테스트', () => {
     /**

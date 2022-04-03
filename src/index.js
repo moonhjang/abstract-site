@@ -30,12 +30,23 @@ class Board extends Site {
     }
 
     publish(article){
-        if (this.notice !== '사이트에 추가되지 않은 게시판'){
-            return this.boards.push(article)
+        if (this.notice !== '사이트에 추가되지 않은 게시판'){    
+            if (article.subject === null || article.aubject === ''){
+                throw Error()
+            } else if (article.conetent=== null || article.conetent === ''){
+                throw Error()   
+            } else if (article.author === null || article.author === ''){
+                throw Error()
+            } else {
+                this.boards.push(article)
+            }
+
         } else {
             throw Error()
         }
     }
+
+
 
     getAllArticles() {
         return this.boards
