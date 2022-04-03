@@ -1,7 +1,7 @@
 class Site {
     constructor() {
         this.boards = [];
-      }
+    }
     
     addBoard(board) {
         if (this.boards.find(name => name.notice === board.notice)){
@@ -10,10 +10,14 @@ class Site {
             this.boards.push(board)
         }
     }
-   
-    findBoardByName(board) {
+    
+    findBoardByName(board){
         let boardname =this.boards.find(name => name.notice === board)
-        return boardname;   
+        return boardname;
+    }
+
+    total(){
+        console.log(this.boards)
     }
 }
    
@@ -21,72 +25,107 @@ class Site {
 class Board extends Site {
     constructor(notice) {
         super()                //Site에 있는 정보를 어떻게 가져오지?
-        this.notice = notice;      
+        this.notice = notice; 
+        
         if (notice === '' || notice === null){
             throw Error()
         }
     }
 
-    publish(article) {
-   
-        // this.notice.findOne(name => console.log(name.subject))
-        if (this.notice !== '사이트에 추가되지 않은 게시판'){
+    publish(article){
+
+        if (this.notice !== '사이트에 추가되지 않은 게시판'){    
             if (article.subject === null || article.aubject === ''){
-                console.log(article.subject, 'error')
+                throw Error()
             } else if (article.conetent=== null || article.conetent === ''){
-                console.log(article.conetent, 'error')
-           
+                throw Error()   
             } else if (article.author === null || article.author === ''){
-                console.log(article.author,'error')
+                throw Error()
             } else {
                 this.boards.push(article)
             }
-             //id  규칙
-            //규칙을 이용 아이디가 만든다. 
         } else {
-            console.log('진짜 error')
+            throw Error()
         }
     }
+
+
 
     getAllArticles() {
         return this.boards
     }
+
+
 }
 
-class Article {
+class Article extends Board {
     constructor({subject,content,author}) {
+        super()
         this.subject = subject;
         this.content = content;
         this.author = author;
         this.id = '공지사항-'+ Math.random(); 
         this.createdDate = new Date().toISOString();
     } 
+
+    reply(comment) {
+        if (this.subject === '아직 게시하지 않은 공지사항입니다.'){
+            this.boards.push(comment)
+        } else {
+
+        }
+        console.log(super.total,  '아티클 보드')
+        // this.boards.push(comment) (comment, '코멘트추가')
+    }
+}
+
+class Comment {
+    constructor({content,author}) {
+        this.content = content;
+        this.author = author;
+    } 
 }
 
 
-class Comment {}
 
-//기본셋팅
+
+
+
+
 mySite = new Site();
-const noticeBoard = new Board('공지사항');
-mySite.addBoard(noticeBoard);
-//기본셋팅
+const noticeBoard = new Board('공지사항');  //board클래스에 공지사항을 넣어
 
-mySite.findBoardByName('공지사항');
 
-const article = new Article({
+mySite.addBoard(noticeBoard);       //noticeboard를 추가해줘
+mySite.findBoardByName('공지사항'); //공지사항을 찾아줘
+console.log(mySite.findBoardByName('공지사항'),'공지사항을 찾아줘')
+
+const publishedArticle = new Article({
     subject: '첫번째 공지사항입니다.',
     content: '테스트 코드는 수정하면 안됩니다.',
     author: '강승현',
 });
-noticeBoard.publish(article);  //pass
-console.log(noticeBoard.publish(article), 'pass')
+noticeBoard.publish(publishedArticle);
 
-
-const article2 = new Article({
-    subject: null,
-    content: null,
-    author: '',
+const draftArticle = new Article({
+    subject: '아직 게시하지 않은 공지사항입니다.',
+    content: '댓글을 달 수 없어야 합니다',
+    author: '강승현',
 });
-noticeBoard.publish(article2);  //fail
-console.log(noticeBoard.publish(article2), 'fail')
+
+
+const comment = new Comment({
+    content: '넵!',
+    author: '댕댕이',
+});
+publishedArticle.reply(comment);
+
+
+
+const comment2 = new Comment({
+    content: '넵!',
+    author: '댕댕이',
+});
+draftArticle.reply(comment2);
+
+console.log(mySite.boards,'최종')
