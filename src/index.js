@@ -64,11 +64,20 @@ class Article extends Board {
 
     reply(comment) {
         if (this.subject !== '아직 게시하지 않은 공지사항입니다.'){
-            this.boards.push(comment)
+            if (comment.conetent === null || comment.conetent === ''){
+                throw Error()
+            } else if (comment.author === null || comment.author === ''){
+                throw Error()
+            } else {
+                this.boards.push(comment)
+            }
         } else {
             throw Error()
         }
-        console.log(super.total,  '아티클 보드')
+    }
+
+    getAllComments() {
+        return this.boards
     }
 }
 
@@ -76,6 +85,7 @@ class Comment {
     constructor({content,author}) {
         this.content = content;
         this.author = author;
+        this.createdDate = new Date().toISOString();
     } 
 }
 

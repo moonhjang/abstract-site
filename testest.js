@@ -49,8 +49,6 @@ class Board extends Site {
         }
     }
 
-
-
     getAllArticles() {
         return this.boards
     }
@@ -69,13 +67,16 @@ class Article extends Board {
     } 
 
     reply(comment) {
-        if (this.subject === '아직 게시하지 않은 공지사항입니다.'){
+        if (this.subject !== '아직 게시하지 않은 공지사항입니다.'){
             this.boards.push(comment)
         } else {
-
+            throw Error()
         }
         console.log(super.total,  '아티클 보드')
-        // this.boards.push(comment) (comment, '코멘트추가')
+    }
+
+    getAllArticles() {
+        return this.boards
     }
 }
 
