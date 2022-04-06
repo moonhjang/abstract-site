@@ -73,7 +73,9 @@ describe('Board 요구사항 테스트', () => {
         const notAddedBoard = new Board('사이트에 추가되지 않은 게시판');
 
         mySite.addBoard(addedBoard);
-        
+
+     
+
         expect(() => {
             const article = new Article({
                 subject: '글 제목',
@@ -83,6 +85,7 @@ describe('Board 요구사항 테스트', () => {
             addedBoard.publish(article);
         }).not.toThrow();
 
+
         expect(() => {
             const article = new Article({
                 subject: '글 제목2',
@@ -91,6 +94,7 @@ describe('Board 요구사항 테스트', () => {
             });
             notAddedBoard.publish(article);
         }).toThrow();
+
     });
 
     test('Board에 Article을 추가할 때 Article에 ID를 자동 생성해서 부여해야 한다.', () => {
@@ -219,6 +223,7 @@ describe('Article 요구사항 테스트', () => {
             author: '강승현',
         });
 
+
         expect(() => {
             const comment = new Comment({
                 content: '넵!',
@@ -234,6 +239,7 @@ describe('Article 요구사항 테스트', () => {
             });
             draftArticle.reply(comment);
         }).toThrow();
+
     });
 
     test('Article에 Comment를 추가할 때 Comment에 작성 일자가 들어가야 한다.', () => {
@@ -245,6 +251,7 @@ describe('Article 요구사항 테스트', () => {
             author: '강승현',
         });
         noticeBoard.publish(article);
+
 
         const comment = new Comment({
             content: '넵!',

@@ -1,19 +1,20 @@
 class Site {
     constructor() {
         this.boards = [];
-      }
-    
+    }
+
     addBoard(board) {
         if (this.boards.find(name => name.notice === board.notice)){
             throw Error()
         } else {
-            this.boards.push(board)
+            this.boards.push(board);
+            board.confirm = true
         }
     }
-    
-    findBoardByName(board){
-        let boardname =this.boards.find(name => name.notice === board)
-        return boardname;
+
+    findBoardByName(boardname) {
+        let boardnames = this.boards.find(name => name.notice === boardname)
+        return boardnames;
     }
 
 }
@@ -21,72 +22,77 @@ class Site {
 
 class Board extends Site {
     constructor(notice) {
-        super()                //Site에 있는 정보를 어떻게 가져오지?
-        this.notice = notice; 
-        
+        super()
         if (notice === '' || notice === null){
             throw Error()
+        } else {
+            this.notice = notice;
+            this.confirm = false;
+            this.id = '공지사항-'+ Math.random(); 
+            this.createdDate = new Date().toISOString();
         }
     }
 
     publish(article){
-        if (this.notice !== '사이트에 추가되지 않은 게시판'){    
-            if (article.subject === null || article.aubject === ''){
+        if (this.confirm === true){
+            if (article.subject === '' || article.subject === null){
                 throw Error()
-            } else if (article.conetent=== null || article.conetent === ''){
-                throw Error()   
-            } else if (article.author === null || article.author === ''){
+            } else if (article.content === '' || article.content === null){
+                throw Error()
+            } else if (article.author === '' || article.author === null){
                 throw Error()
             } else {
                 this.boards.push(article)
-            }
-
+                article.check = true; 
+            }              
         } else {
             throw Error()
         }
     }
 
-    getAllArticles() {
+    getAllArticles(){
         return this.boards
     }
-
 }
 
 class Article extends Board {
-    constructor({subject,content,author}) {
+    constructor({subject, content, author}) {
         super()
         this.subject = subject;
         this.content = content;
         this.author = author;
+        this.check = false; 
         this.id = '공지사항-'+ Math.random(); 
         this.createdDate = new Date().toISOString();
-    } 
+        
+    }
 
     reply(comment) {
-        if (this.subject !== '아직 게시하지 않은 공지사항입니다.'){
-            if (comment.conetent === null || comment.conetent === ''){
+        if (this.check === true){
+            if (comment.content === '' || comment.content === null){
                 throw Error()
-            } else if (comment.author === null || comment.author === ''){
+            } else if (comment.author === '' || comment.author === null){
                 throw Error()
             } else {
-                this.boards.push(comment)
+            this.boards.push(comment)
             }
         } else {
             throw Error()
         }
     }
 
-    getAllComments() {
+    getAllComments(){
         return this.boards
     }
 }
 
-class Comment {
-    constructor({content,author}) {
+class Comment{
+    constructor({content, author}) {
         this.content = content;
         this.author = author;
+        this.id = '공지사항-'+ Math.random(); 
         this.createdDate = new Date().toISOString();
-    } 
+    }
 }
 
 
@@ -96,3 +102,6 @@ module.exports = {
     Article,
     Comment,
 };
+
+
+
